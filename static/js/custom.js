@@ -8,6 +8,10 @@ socket.on('disconnect', function() {
     $('#status').text('disconnected');
 });
 
+socket.on('force_update', function(laser_data) {
+  display_data(laser_data);
+});
+
 function display_data(laser_data) {
   console.log(laser_data.data)
 
@@ -16,10 +20,13 @@ function display_data(laser_data) {
   if (canvas.getContext){
 
     var ctx = canvas.getContext("2d");
+    ctx.clearRect(0,0,400,400);
     ctx.beginPath();
     ctx.moveTo(200,200);
     ctx.lineTo(400,200);
     ctx.stroke();
+
+    var scale = 0.2;
 
     var array = laser_data.data;
     data_str = "( ";
@@ -27,7 +34,7 @@ function display_data(laser_data) {
     for (var i=0;i<array.length;i++){
       var point = array[i];
       var angle = point[0];
-      var distance = point[1];
+      var distance = point[1] * scale;
 
       data_str += "(" + angle + "," + distance + ") ";
       var rad = (angle * Math.PI) / 180;
