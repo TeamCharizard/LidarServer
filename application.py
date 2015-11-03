@@ -21,22 +21,22 @@ class LidarServer:
         return self.data
 
 
-app = Flask(__name__)
-socketio = SocketIO(app)
+application = Flask(__name__)
+socketio = SocketIO(application)
 lds = LidarServer()
 
 test_data = {'data': [{'t':-1,'r':-1}]}
 
-@app.route('/')
+@application.route('/')
 def get_root():
     return render_template('index.html')
 
-@app.route('/data/')
+@application.route('/data/')
 def index():
     return render_template('data.html')
 
 # when we get a post full of data, send it!
-@app.route("/publish/",  methods = ['POST'])
+@application.route("/publish/",  methods = ['POST'])
 def publish_data():
     return lds.publish_data()
 
@@ -49,7 +49,7 @@ def get_data():
     return d
 
 if __name__ == '__main__':
-    app.debug = True
-    socketio.run(app)
+    application.debug = True
+    socketio.run(application)
 
 
