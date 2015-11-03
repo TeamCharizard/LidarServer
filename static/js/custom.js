@@ -13,7 +13,6 @@ socket.on('force_update', function(laser_data) {
 });
 
 function display_data(laser_data) {
-  console.log(laser_data.data)
 
   var canvas = document.getElementById("viz");
 
@@ -50,12 +49,9 @@ function display_data(laser_data) {
     }
 
     data_str += ")";
-    console.log(array);
-    $("#data").text(data_str);
   }
 }
 
 $('#update').click(function() {
-  console.log('update me plz');
   socket.emit('update', display_data);
 });
