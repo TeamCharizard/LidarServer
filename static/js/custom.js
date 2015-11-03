@@ -10,13 +10,12 @@ socket.on('disconnect', function() {
 
 function display_data(laser_data) {
   var data_str = "( ";
+  console.log(laser_data.data)
   var array = laser_data.data;
-  console.log(array)
   for (var i=0;i<array.length;i++){
     var point = array[i];
-    console.log(point)
-    var angle = point.r;
-    var distance = point.t;
+    var angle = point[0];
+    var distance = point[1];
     data_str += "(" + angle + "," + distance + ") ";
   }
   data_str += ")";

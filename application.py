@@ -12,10 +12,13 @@ class LidarServer:
     def publish_data(self):
         try :
             self.data = json.loads(request.form['data'])
-            print self.data
+            print "DATA: ", self.data
             return "success\n"
         except KeyError:
-            return "key 'data' not found\n"
+            print request.form
+            return "Key Error: " + ",".join(request.form.keys())
+        except ValueError:
+            return "Value Error: " + request.form['data']
 
     def get_data(self):
         return self.data
@@ -24,8 +27,6 @@ class LidarServer:
 application = Flask(__name__)
 socketio = SocketIO(application)
 lds = LidarServer()
-
-test_data = {'data': [{'t':-1,'r':-1}]}
 
 @application.route('/')
 def get_root():
@@ -44,8 +45,6 @@ def publish_data():
 @socketio.on('update')
 def get_data():
     d = lds.get_data()
-    print d
-    print test_data
     return d
 
 if __name__ == '__main__':
