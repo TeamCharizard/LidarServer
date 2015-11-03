@@ -4,7 +4,9 @@ import json
 
 class LidarServer:
 
-    data = {'data': []}
+    data = {'data': [(0,400),
+        (45,300)]
+        }
 
     def __init__(self):
         pass
